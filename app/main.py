@@ -26,4 +26,4 @@ def square(e: int):
 
 @app.get("/data")
 def zone_apex():
-    return{"This is some data": "Gracie loves apple pie."}
+    return{"This is some data": "Gracie loves apple pie. She also likes pumpkin pie."}
