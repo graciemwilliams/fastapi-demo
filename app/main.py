@@ -39,7 +39,7 @@ def customer(idx: int):
 
 @app.post("/get_body")
 async def get_body(request: Request):
-    return await request.json()
+    response = await request.json()
     first_name = response["fname"]
     last_name = response["lname"]
     favorite_number = response["favnu"]
