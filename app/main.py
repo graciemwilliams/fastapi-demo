@@ -36,11 +36,15 @@ def get_genres():
         json_data=[]
         for result in results:
             json_data.append(dict(zip(headers,result)))
-        cur.close()
-        db.close()
         return(json_data)
     except Error as e:
         return {"Error": "MySQL Error: " + str(e)}
+    finally:
+        # Ensure resources are closed properly
+        if cur:
+            cur.close()
+        if db and db.is_connected():
+            db.close()
 
 @app.get('/songs')
 def get_songs():
@@ -52,11 +56,15 @@ def get_songs():
         json_data=[]
         for result in results:
             json_data.append(dict(zip(headers,result)))
-        cur.close()
-        db.close()
         return(json_data)
     except Error as e:
         return {"Error": "MySQL Error: " + str(e)}
+    finally:
+        # Ensure resources are closed properly
+        if cur:
+            cur.close()
+        if db and db.is_connected():
+            db.close()
 
 @app.get("/")  # zone apex
 def zone_apex():
