@@ -23,17 +23,13 @@ DBUSER = "admin"
 DBPASS = os.getenv('DBPASS')
 DB = "tkd5jg"
 
+db = mysql.connector.connect(user=DBUSER, host=DBHOST, password=DBPASS, database=DB)
+cur=db.cursor()
+
 @app.get('/genres')
 def get_genres():
     query = "SELECT * FROM genres ORDER BY genreid;"
-    try:
-        db = mysql.connector.connect(
-            host=DBHOST,
-            user=DBUSER,
-            password=DBPASS,
-            database=DB
-        )
-        cur = db.cursor()    
+    try:    
         cur.execute(query)
         headers=[x[0] for x in cur.description]
         results = cur.fetchall()
@@ -43,24 +39,11 @@ def get_genres():
         return(json_data)
     except Error as e:
         return {"Error": "MySQL Error: " + str(e)}
-    finally:
-        # Ensure resources are closed properly
-        if cur:
-            cur.close()
-        if db and db.is_connected():
-            db.close()
 
 @app.get('/songs')
 def get_songs():
     query = "SELECT * FROM songs ORDER BY id;"
-    try:    
-db = mysql.connector.connect(
-            host=DBHOST,
-            user=DBUSER,
-            password=DBPASS,
-            database=DB
-        )
-        cur = db.cursor()
+    try:   
         cur.execute(query)
         headers=[x[0] for x in cur.description]
         results = cur.fetchall()
@@ -70,12 +53,6 @@ db = mysql.connector.connect(
         return(json_data)
     except Error as e:
         return {"Error": "MySQL Error: " + str(e)}
-    finally:
-        # Ensure resources are closed properly
-        if cur:
-            cur.close()
-        if db and db.is_connected():
-            db.close()
 
 @app.get("/")  # zone apex
 def zone_apex():
